@@ -1,22 +1,24 @@
 const URL = 'http://numbersapi.com'
 
-axios.get(`${URL}/3?json`)
-    .then(response=>console.log(response.data))
+async function getFact(){
+    const resp1 = await axios.get(`${URL}/3?json`)
+    console.log(resp1.data)
 
-axios.get(`${URL}/1,2,3,4?json`)
-    .then(response=>console.log(response.data))
+    const resp2 = await axios.get(`${URL}/1,2,3,4?json`)
+    console.log(resp2.data)
 
-const favNumbers = [15,21,30,99]
-const promises = []
+};
 
-favNumbers.forEach( number => (
-    promises.push(
-        axios.get(`${URL}/${number}`)
-    )
-))
+async function getRepeatedFacts(){
+    const facts= [];
 
-Promise.all(promises)
-    .then(array => (
-        array.forEach( p => console.log(p.data))
-    ))
+    for (let i=0; i<4; i++){
+        const resp = await axios.get(`${URL}/4`)
+        facts.push(resp.data)
+    }
 
+    facts.forEach(fact => console.log(fact))
+}
+
+getFact();
+getRepeatedFacts();
